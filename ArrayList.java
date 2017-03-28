@@ -1,12 +1,12 @@
 public class ArrayList<T extends Comparable<T>> implements List<T> {
 	private T[] a;
-	private int size = 0;	// actual length
+	private int size;	// actual length
 
 	@SuppressWarnings("unchecked")
 	public ArrayList() {
 		int capacity = 2;
 		a = (T[]) new Comparable[capacity];
-		//System.out.println(a.length);
+		size = 0;
 	}
 
 	public boolean add(T element) {
