@@ -284,7 +284,7 @@ public class LinkedList<T extends Comparable<T>> implements List<T> {
 		return dummy.getNext();
 	}
 
-	public void sortW(Comparator<T> comp) {
+	public void sort(Comparator<T> comp) {
 		head = mergeSortWithComparator(head, comp);
 		Node current = head;
 		while (current != null && current.getNext() != null) {

@@ -1,0 +1,16 @@
+Analysis
+
+Method									ArrayList Runtime	LinkedList Runtime	Explanation
+boolean add(T element)					O(1)				O(1)				bookkeep the tail index and tail node 
+boolean add(int index, T element);		O(n)				O(n)				need to move others vs. need to locate the element
+void clear();							O(1)				O(1)				just create a new list
+boolean contains(T element);			O(n)				O(n)				scan through the whole list in the worst case
+T get(int index);						O(1)				O(n)				random access vs. sequntial access
+int indexOf(T element);					O(n)				O(n)				scan through the whole list in the worst case
+boolean isEmpty();						O(1)				O(1)				check the size field directly
+int lastIndexOf(T element);				O(n)				O(n)				scan through the whole list in the worst case
+T set(int index, T element);			O(1)				O(n)				random access vs. sequntial access
+int size();								O(1)				O(1)				check the size field directly
+void sort(boolean order);				O(nlogn)			O(nlogn)			merge sort
+boolean remove(T element);				O(n) + O(n) = O(n)	O(n) + O(1) = O(n)	need to locate the element
+T remove(int index);					O(n) + O(n) = O(n)	O(n) + O(1)	= O(n)	may need to move other elements

@@ -221,7 +221,7 @@ public class CelestialDatabase {
 		Star rg = new RedGiant("RG", 23, 2900);
 		Star wd2 = new WhiteDwarf("WD2", 100, 100);
 
-		CelestialDatabase db = new CelestialDatabase("array");
+		CelestialDatabase db = new CelestialDatabase("linked");
 
 		db.list.add(sun);
 		db.list.add(sg);
@@ -231,6 +231,8 @@ public class CelestialDatabase {
 		db.list.add(wd2);
 		db.remove(4);
 		db.display();
+		System.out.println("find");
+		System.out.println(db.find("Su"));
 		System.out.println("findSun");
 		System.out.println(db.findSun());
 		
@@ -283,7 +285,7 @@ public class CelestialDatabase {
 
 }
 
-/* a class implementing Comparator with decreasing size */
+/* a class implementing Comparator with decreasing star size */
 class SizeComparator implements Comparator<Star> {
 	public int compare(Star s1, Star s2) {
 		if (s1.getSize() < s2.getSize()) {
