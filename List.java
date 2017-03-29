@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 public interface List<T extends Comparable<T>> {
   /* 
    * Add an element to end of the list. If element is null,
@@ -77,7 +79,7 @@ public interface List<T extends Comparable<T>> {
    * to use the public int compareTo(T o) method.
    */
   void sort(boolean order);
-  
+  void sort(Comparator<T> comp);
   /*
    * Remove the first instance of element from the list. This 
    * method should also shifts any subsequent elements to the 

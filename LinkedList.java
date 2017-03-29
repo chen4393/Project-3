@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 public class LinkedList<T extends Comparable<T>> implements List<T> {
 	private Node head, tail;
 	private int size;
@@ -279,6 +281,48 @@ public class LinkedList<T extends Comparable<T>> implements List<T> {
 				current = current.getNext();
 			}
 		}		
+		return dummy.getNext();
+	}
+
+	public void sortW(Comparator<T> comp) {
+		head = mergeSortWithComparator(head, comp);
+		Node current = head;
+		while (current != null && current.getNext() != null) {
+			current = current.getNext();
+		}
+		tail = current;
+	}
+
+	private Node mergeSortWithComparator(Node head, Comparator<T> comp) {
+		if (head != null && head.getNext() != null) {
+            Node fast = head.getNext().getNext(), slow = head;
+            while (fast != null && fast.getNext() != null) {
+                fast = fast.getNext().getNext();
+                slow = slow.getNext();
+            }
+            Node l2 = mergeSortWithComparator(slow.getNext(), comp);
+            slow.setNext(null);
+            Node l1 = mergeSortWithComparator(head, comp);
+            return mergeWithComparator(l1, l2, comp);
+        } else {
+            return head;
+        }
+	}
+
+	// comparator
+	@SuppressWarnings("unchecked")
+	private Node mergeWithComparator(Node l1, Node l2, Comparator<T> comp) {
+		Node dummy = new Node(head.getData()), current = dummy;
+		while (l1 != null || l2 != null) {
+			if (l2 == null || (l1 != null && comp.compare(((T)l1.getData()), ((T)l2.getData())) <= 0)) {
+				current.setNext(new Node((T)l1.getData()));
+				l1 = l1.getNext();
+			} else if (l1 == null || (l2 != null && comp.compare(((T)l1.getData()), ((T)l2.getData())) > 0)){
+				current.setNext(new Node((T)l2.getData()));
+				l2 = l2.getNext();
+			}
+			current = current.getNext();
+		}	
 		return dummy.getNext();
 	}
 }

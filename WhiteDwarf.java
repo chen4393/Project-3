@@ -1,4 +1,4 @@
-public static class WhiteDwarf {
+public class WhiteDwarf extends Star{
 
 	public WhiteDwarf(String name, double mass, double size) {
 		super(name, mass, size);

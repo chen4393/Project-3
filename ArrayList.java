@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 public class ArrayList<T extends Comparable<T>> implements List<T> {
 	private T[] a;
 	private int size;	// actual length
@@ -152,11 +154,12 @@ public class ArrayList<T extends Comparable<T>> implements List<T> {
 		list.add(5);
 		list.add(4);
 		list.display();
-		//list.sort(true);
-		list.remove((Integer)2);
+		MyComparator comp = new MyComparator();
+		list.sort(comp);
+		//list.remove((Integer)2);
 		list.display();
-		list.clear();
-		System.out.println(list.size());
+		//list.clear();
+		//System.out.println(list.size());
 		/*
 		for (int i = 0; i < 100; i++) {
 			list.add((int)Math.floor(Math.random() * 100));
@@ -166,6 +169,7 @@ public class ArrayList<T extends Comparable<T>> implements List<T> {
 		System.out.println("Sorting");
 		list.display();
 		*/
+		/*
 		ArrayList<String> l = new ArrayList<String>();
 		l.add("hi");
 		l.add("bye");
@@ -181,6 +185,7 @@ public class ArrayList<T extends Comparable<T>> implements List<T> {
 		l.display();
 		l.clear();
 		l.display();
+		*/
 	}
 
 	@SuppressWarnings("unchecked")
@@ -256,6 +261,69 @@ public class ArrayList<T extends Comparable<T>> implements List<T> {
 					j++;
 				}
 			}
+		}
+	}
+
+	public void sort(Comparator<T> comp) {
+		mergeSortWithComparator(a, 0, size - 1, comp);
+	}
+
+	public void mergeSortWithComparator(T[] arr, int from, int to, Comparator<T> comp) {
+		if (from < to) {
+			/* Split the original array into two sub-arrays */
+			int mid = (from + to) / 2;
+			/* Sort these two sub-array separately */
+			mergeSortWithComparator(arr, from, mid, comp);
+			mergeSortWithComparator(arr, mid + 1, to, comp);
+			/* Merge the two sorted sub-array */
+			mergeWithComparator(arr, from, mid, to, comp);
+		}
+	}
+
+	/* another merge with comparator */
+	@SuppressWarnings("unchecked")
+	private void mergeWithComparator(T[] arr, int from, int mid, int to, Comparator<T> comp) {
+		int n = to - from + 1;
+		int n1 = mid - from + 1;
+		int n2 = to - mid;
+		/* Create two sub-arrays according to the partition point
+		 * and copy the contents into them */
+		T[] arr1 = (T[]) new Comparable[n1];
+		T[] arr2 = (T[]) new Comparable[n2];
+		for (int i = 0; i < n1; i++) {
+			arr1[i] = arr[from + i];
+		}
+		for (int j = 0; j < n2; j++) {
+			arr2[j] = arr[mid + 1 + j];
+		}
+
+		int i = 0, j = 0;
+		for (int k = from; k <= to; k++) {
+			/* if arr2 is finished going through OR the element in arr1 is less than arr2,
+			 * use the element in arr1 */
+			if (j >= arr2.length || (i < arr1.length && comp.compare(arr1[i], arr2[j]) <= 0)) {
+			    arr[k] = arr1[i];
+			    i++;
+			}
+			/* if arr1 is finished going through OR the element in arr1 is greater than arr2,
+			 * use the element in arr2 */
+			else if (i >= arr1.length || (j < arr2.length && comp.compare(arr1[i], arr2[j]) > 0)){
+				arr[k] = arr2[j];
+				j++;
+			}
+			//System.out.println(k + ": " + arr[k]);
+		}
+	}
+}
+
+class MyComparator implements Comparator<Integer> {
+		public int compare(Integer s1, Integer s2) {
+			if (s1 < s2) {
+				return 1;
+			} else if (s1 > s2) {
+				return -1;
+			} else {
+				return 0;
 		}
 	}
 }
